@@ -17,9 +17,15 @@ else
       sudo apt install $i -y
       #Parametrizando mariadb.
       password_mariadb=$(pwgen 25 1 --symbols)
-      mysql_secure_installation --host=::1 --port=3333 --password=$password_mariadb --user=testing
+      echo "mysql-server mysql-server/root_password password $password_mariadb" | sudo debconf-set-selections
+      echo "mysql-server mysql-server/root_password_again password $password_mariadb" | sudo debconf-set-selections 
       #testing
-      echo $password_mariadb
+      export DEBIAN_FRONTEND="noninteractive"
+      echo $password_mariadb 
+      mysql_secure_installation
     fi
   done
 fi
+
+password_mariadb=$(pwgen 25 1 --symbols)
+echo $password_mariadb
