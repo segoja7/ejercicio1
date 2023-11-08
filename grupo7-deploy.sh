@@ -36,6 +36,7 @@ for i in $paquetes; do
                 echo "Instalando $i"
                 sudo apt update -y
                 sudo apt install $i libapache2-mod-php php-mysql -y
+                echo "<?php phpinfo(); ?>" > /var/www/html/index.php
         elif [ "apache2" = "$i" ]; then
                 echo "el paquete: $i, no esta instalado"
                 echo "parametrizando $i"
