@@ -8,6 +8,7 @@ else
 fi
 #################################
 password_mariadb=""
+repo="The-DevOps-Journey-101"
 paquetes="git apache2 php pwgen mariadb-server"
 for i in $paquetes; do
         if dpkg -l | grep -q "$i"; then
@@ -33,6 +34,19 @@ for i in $paquetes; do
                 echo "el paquete: $i, no esta instalado"
                 echo "parametrizando $i"
                 echo "Instalando $i"
+                sudo apt update -y
+                sudo apt install $i libapache2-mod-php php-mysql -y
+        elif [ "apache2" = "$i" ]; then
+                echo "el paquete: $i, no esta instalado"
+                echo "parametrizando $i"
+                echo "Instalando $i"
+                sudo apt update -y
+                sudo apt install $i -y
+                ##Iniciando la base de datos
+                systemctl start apache2
+                systemctl enable apache2
+                systemctl status apache2
+                mv /var/www/html/index.html /var/www/html/index.hmtl.bkp
         else
                 echo "el paquete: $i, no esta instalado"
                 echo "Instalando $i"
