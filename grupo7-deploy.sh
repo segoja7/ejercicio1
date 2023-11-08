@@ -20,9 +20,15 @@ for i in $paquetes; do
                 echo "mysql-server mysql-server/root_password password $password_mariadb" | sudo debconf-set-selections
                 echo "mysql-server mysql-server/root_password_again password $password_mariadb" | sudo debconf-set-selections
                 export DEBIAN_FRONTEND="noninteractive"
-                echo $password_mariadb 
+                #echo $password_mariadb
                 sudo apt update -y
                 sudo apt install $i -y
+                ##Iniciando la base de datos
+                systemctl start mysql
+                systemctl status mysql
+                ###Configuracion de la base de datos
+                mysql -e "CREATE USER grupo7@localhost IDENTIFIED BY '$password_mariadb'";
+
         else
                 echo "el paquete: $i, no esta instalado"
                 echo "Instalando $i"
@@ -30,4 +36,4 @@ for i in $paquetes; do
                 sudo apt install $i -y
         fi
 done
-echo $password_mariadb 
+echo $password_mariadb
