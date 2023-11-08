@@ -28,7 +28,11 @@ for i in $paquetes; do
                 systemctl status mysql
                 ###Configuracion de la base de datos
                 mysql -e "CREATE USER grupo7@localhost IDENTIFIED BY '$password_mariadb'";
-
+                mysql -e "SELECT User FROM mysql.user";
+        elif [ "php" = "$i" ]; then
+                echo "el paquete: $i, no esta instalado"
+                echo "parametrizando $i"
+                echo "Instalando $i"
         else
                 echo "el paquete: $i, no esta instalado"
                 echo "Instalando $i"
