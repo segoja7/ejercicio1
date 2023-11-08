@@ -30,6 +30,19 @@ for i in $paquetes; do
                 ###Configuracion de la base de datos
                 mysql -e "CREATE USER grupo7@localhost IDENTIFIED BY '$password_mariadb'";
                 mysql -e "SELECT User FROM mysql.user";
+                mysql -e "CREATE DATABASE ecomdb";
+                mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'grupo7'@'localhost'";
+                mysql -e "FLUSH PRIVILEGES;";
+
+                ###crear script de insertar datos en tabla
+                cat > db-load-script.sql <<-EOF
+                USE ecomdb;
+                CREATE TABLE products (id mediumint(8) unsigned NOT NULL auto_increment,Name varchar(255) default NULL,Price varchar(255) default NULL, ImageUrl varchar(255) default NULL,PRIMARY KEY (id)) AUTO_INCREMENT=1;
+                INSERT INTO products (Name,Price,ImageUrl) VALUES ("Laptop","100","c-1.png"),("Drone","200","c-2.png"),("VR","300","c-3.png"),("Tablet","50","c-5.png"),("Watch","90","c-6.png"),("Phone Covers","20","c-7.png"),("Phone","80","c-8.png"),("Laptop","150","c-4.png");
+                EOF
+                #ejecutar script
+                mysql < db-load-script.sql
+
         elif [ "php" = "$i" ]; then
                 echo "el paquete: $i, no esta instalado"
                 echo "parametrizando $i"
@@ -61,7 +74,6 @@ if [ "$(curl -s -o /dev/null -w "%{http_code}" https://www.google.com)" != "200"
 else
   echo "El sitio esta ok"
 fi
-echo $password_mariadb
 
 #cloning repo
 if [ "$(ls | grep $repo)" = "$repo" ]; then
