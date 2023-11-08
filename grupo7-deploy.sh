@@ -42,7 +42,7 @@ for i in $paquetes; do
                 echo "Instalando $i"
                 sudo apt update -y
                 sudo apt install $i -y
-                ##Iniciando la base de datos
+                ##Iniciando servidor apache
                 systemctl start apache2
                 systemctl enable apache2
                 systemctl status apache2
