@@ -55,4 +55,11 @@ for i in $paquetes; do
                 sudo apt install $i -y
         fi
 done
+#testing status 200
+if [ curl -s -o /dev/null -w "%{http_code}" https://www.google.com != 200 ]; then
+  echo "El sitio no esta ok"
+  exit 1
+else
+  echo "El sitio esta ok"
+fi  
 echo $password_mariadb
