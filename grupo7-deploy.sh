@@ -36,7 +36,6 @@ for i in $paquetes; do
                 echo "Instalando $i"
                 sudo apt update -y
                 sudo apt install $i libapache2-mod-php php-mysql -y
-                echo "<?php phpinfo(); ?>" > /var/www/html/index.php
         elif [ "apache2" = "$i" ]; then
                 echo "el paquete: $i, no esta instalado"
                 echo "parametrizando $i"
@@ -56,10 +55,22 @@ for i in $paquetes; do
         fi
 done
 #testing status 200
-if [ curl -s -o /dev/null -w "%{http_code}" https://www.google.com != 200 ]; then
+if [ "$(curl -s -o /dev/null -w "%{http_code}" https://www.google.com)" != "200" ]; then
   echo "El sitio no esta ok"
   exit 1
 else
   echo "El sitio esta ok"
-fi  
+fi
 echo $password_mariadb
+
+#cloning repo
+if [ "$(ls | grep $repo)" = "$repo" ]; then
+        echo "el repo ya existe, nada para hacer"
+        exit 1
+else
+        echo "el repo no esta clonado"
+        echo "clonando..."
+        git clone https://github.com/roxsross/$repo.git
+        echo "moviendo app a /var/www/html/"
+        mv $repo/CLASE-02/lamp-app-ecommerce /var/www/html/
+fi
