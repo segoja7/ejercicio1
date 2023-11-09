@@ -8,7 +8,7 @@ else
 fi
 #################################
 password_mariadb=""
-repo="The-DevOps-Journey-101"
+repo="bootcamp-devops-2023"
 paquetes="git apache2 php pwgen mariadb-server"
 for i in $paquetes; do
         if dpkg -l | grep -q "$i"; then
@@ -76,6 +76,10 @@ else
         echo "el repo no esta clonado"
         echo "clonando..."
         git clone https://github.com/roxsross/$repo.git
-        echo "moviendo app a /var/www/html/"
-        mv $repo/CLASE-02/lamp-app-ecommerce /var/www/html/
+        cd $repo
+        git checkout clase2-linux-bash
+        echo "moviendo app-295devops-travel a /var/www/html/"
+        mv app-295devops-travel /var/www/html/
 fi
+
+
