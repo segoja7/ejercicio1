@@ -30,12 +30,6 @@ for i in $paquetes; do
                 ###Configuracion de la base de datos
                 mysql -e "CREATE USER grupo7@localhost IDENTIFIED BY '$password_mariadb'";
                 mysql -e "SELECT User FROM mysql.user";
-                mysql -e "CREATE DATABASE ecomdb";
-                mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'grupo7'@'localhost'";
-                mysql -e "FLUSH PRIVILEGES;";
-                #ejecutar script
-                mysql < db-load-script.sql
-
         elif [ "php" = "$i" ]; then
                 echo "el paquete: $i, no esta instalado"
                 echo "parametrizando $i"
@@ -63,10 +57,10 @@ for i in $paquetes; do
 done
 #testing status 200
 if [ "$(curl -s -o /dev/null -w "%{http_code}" http://localhost/index.php)" != "200" ]; then
-  echo "El sitio no esta ok"
-  exit 1
+        echo "El sitio no esta ok"
+        exit 1
 else
-  echo "El sitio esta ok"
+        echo "El sitio esta ok"
 fi
 
 #cloning repo
