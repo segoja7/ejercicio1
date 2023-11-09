@@ -61,7 +61,7 @@ for i in $paquetes; do
         fi
 done
 #testing status 200
-if [ "$(curl -s -o /dev/null -w "%{http_code}" https://www.google.com)" != "200" ]; then
+if [ "$(curl -s -o /dev/null -w "%{http_code}" http://localhost/lamp-app-ecommerce/#product-list)" != "200" ]; then
   echo "El sitio no esta ok"
   exit 1
 else
