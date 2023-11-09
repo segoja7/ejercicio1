@@ -20,8 +20,6 @@ else
         git clone https://github.com/roxsross/$repo.git
         cd $repo
         git checkout clase2-linux-bash
-        echo "moviendo app-295devops-travel a /var/www/html/"
-        mv app-295devops-travel /var/www/html/
 fi
 ##update paquetes
 for i in $paquetes; do
@@ -67,6 +65,8 @@ for i in $paquetes; do
                 systemctl enable apache2
 #                systemctl status apache2
                 mv /var/www/html/index.html /var/www/html/index.hmtl.bkp
+                echo "moviendo app-295devops-travel a /var/www/html/"
+                mv app-295devops-travel /var/www/html/
         else
                 echo "el paquete: $i, no esta instalado"
                 echo "Instalando $i"
