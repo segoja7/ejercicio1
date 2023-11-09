@@ -30,6 +30,11 @@ for i in $paquetes; do
                 ###Configuracion de la base de datos
                 mysql -e "CREATE USER grupo7@localhost IDENTIFIED BY '$password_mariadb'";
                 mysql -e "SELECT User FROM mysql.user";
+                mysql -e "CREATE DATABASE ecomdb";
+                mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'grupo7'@'localhost'";
+                mysql -e "FLUSH PRIVILEGES;";
+                #ejecutar script
+                mysql < db-load-script.sql
         elif [ "php" = "$i" ]; then
                 echo "el paquete: $i, no esta instalado"
                 echo "parametrizando $i"
