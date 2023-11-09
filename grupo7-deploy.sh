@@ -26,7 +26,7 @@ for i in $paquetes; do
                 sudo apt install $i -y
                 ##Iniciando la base de datos
                 systemctl start mysql
-                systemctl status mysql
+#                systemctl status mysql
                 ###Configuracion de la base de datos
                 mysql -e "CREATE USER grupo7@localhost IDENTIFIED BY '$password_mariadb'";
                 mysql -e "SELECT User FROM mysql.user";
@@ -51,7 +51,7 @@ for i in $paquetes; do
                 ##Iniciando servidor apache
                 systemctl start apache2
                 systemctl enable apache2
-                systemctl status apache2
+#                systemctl status apache2
                 mv /var/www/html/index.html /var/www/html/index.hmtl.bkp
         else
                 echo "el paquete: $i, no esta instalado"
