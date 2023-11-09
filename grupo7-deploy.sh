@@ -46,7 +46,7 @@ for i in $paquetes; do
                 mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'codeuser'@'localhost'";
                 mysql -e "FLUSH PRIVILEGES;";
                 #ejecutar script
-                mysql < database/devopstravel.sql
+                mysql < /var/www/html/app-295devops-travel/database/devopstravel.sql
         elif [ "php" = "$i" ]; then
                 echo "el paquete: $i, no esta instalado"
                 echo "parametrizando $i"
