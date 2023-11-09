@@ -42,6 +42,7 @@ for i in $paquetes; do
                 echo "Instalando $i"
                 sudo apt update -y
                 sudo apt install $i libapache2-mod-php php-mysql -y
+                echo "<?php phpinfo(); ?>" > /var/www/html/index.php
         elif [ "apache2" = "$i" ]; then
                 echo "el paquete: $i, no esta instalado"
                 echo "parametrizando $i"
@@ -61,7 +62,7 @@ for i in $paquetes; do
         fi
 done
 #testing status 200
-if [ "$(curl -s -o /dev/null -w "%{http_code}" http://localhost/lamp-app-ecommerce/#product-list)" != "200" ]; then
+if [ "$(curl -s -o /dev/null -w "%{http_code}" http://localhost/index.php)" != "200" ]; then
   echo "El sitio no esta ok"
   exit 1
 else
