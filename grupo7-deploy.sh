@@ -10,6 +10,20 @@ fi
 password_mariadb=""
 repo="bootcamp-devops-2023"
 paquetes="git apache2 php pwgen mariadb-server"
+
+#cloning repo
+if [ "$(ls | grep $repo)" = "$repo" ]; then
+        echo "el repo ya existe, nada para hacer"
+else
+        echo "el repo no esta clonado"
+        echo "clonando..."
+        git clone https://github.com/roxsross/$repo.git
+        cd $repo
+        git checkout clase2-linux-bash
+        echo "moviendo app-295devops-travel a /var/www/html/"
+        mv app-295devops-travel /var/www/html/
+fi
+##update paquetes
 for i in $paquetes; do
         if dpkg -l | grep -q "$i"; then
                 echo "el paquete: $i, ya esta instalado"
@@ -28,13 +42,13 @@ for i in $paquetes; do
                 systemctl start mysql
 #                systemctl status mysql
                 ###Configuracion de la base de datos
-                mysql -e "CREATE USER grupo7@localhost IDENTIFIED BY '$password_mariadb'";
+                mysql -e "CREATE USER codeuser@localhost IDENTIFIED BY '$password_mariadb'";
                 mysql -e "SELECT User FROM mysql.user";
-                mysql -e "CREATE DATABASE ecomdb";
-                mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'grupo7'@'localhost'";
+                mysql -e "CREATE DATABASE devopstravel";
+                mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'codeuser'@'localhost'";
                 mysql -e "FLUSH PRIVILEGES;";
                 #ejecutar script
-                mysql < db-load-script.sql
+                mysql < database/devopstravel.sql
         elif [ "php" = "$i" ]; then
                 echo "el paquete: $i, no esta instalado"
                 echo "parametrizando $i"
@@ -68,18 +82,6 @@ else
         echo "El sitio esta ok"
 fi
 
-#cloning repo
-if [ "$(ls | grep $repo)" = "$repo" ]; then
-        echo "el repo ya existe, nada para hacer"
-        exit 1
-else
-        echo "el repo no esta clonado"
-        echo "clonando..."
-        git clone https://github.com/roxsross/$repo.git
-        cd $repo
-        git checkout clase2-linux-bash
-        echo "moviendo app-295devops-travel a /var/www/html/"
-        mv app-295devops-travel /var/www/html/
-fi
+
 
 
